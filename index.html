@@ -7,6 +7,9 @@
   <link rel="icon" href="favicon.ico" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/smoothness/jquery-ui.css">
+  <!-- UniteGallery CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/unitegallery/dist/css/unite-gallery.css">
+
   <style>
     :root{
       --pistachio: #CFEBD0;
@@ -15,23 +18,15 @@
       --text: #111111;
       --muted: #6b5a4a;
     }
-
-    /* збережені стилі для іконок соціальних мереж */
     .social-icons { display:flex; gap:10px; align-items:center; }
     .social-icons a { display:inline-flex; width:36px; height:36px; align-items:center; justify-content:center; border-radius:6px; text-decoration:none; background:transparent; }
     .social-icons svg { width:20px; height:20px; display:block; fill: var(--muted); transition: fill .15s ease, transform .12s ease; }
     .social-icons a:hover svg { fill: var(--brown); transform:translateY(-2px); }
-
-    /* booking базові */
     .booking-input { padding:10px 12px; border-radius:10px; border:1px solid rgba(0,0,0,0.06); background:#fff; font-family:inherit; font-size:15px; color:var(--text); box-shadow:0 2px 6px rgba(11,22,33,0.03); }
     .booking-btn { background:var(--pistachio); padding:10px 16px; border-radius:28px; border:0; font-weight:700; cursor:pointer; font-family:inherit; box-shadow:0 8px 22px rgba(17,17,17,0.08); }
     .booking-btn:hover { transform:translateY(-2px); }
-
-    /* віджети і спадкування шрифту для jQuery UI */
     .ui-widget, .ui-widget * { font-family: inherit; font-size: 15px; color: inherit; }
     .promo-booking h3, .promo-tabs h3, .promo-info h3 { font-family: inherit; font-weight:700; color:var(--brown); margin:0 0 8px; font-size:20px; }
-
-    /* promo grid */
     .promo-grid{
       display:grid;
       grid-template-columns: 1fr 1fr 320px;
@@ -42,329 +37,277 @@
     @media (max-width:980px){
       .promo-grid{ grid-template-columns: 1fr; gap:18px; }
     }
-
     .booking-row{ display:flex; gap:10px; align-items:center; margin-top:10px; flex-wrap:wrap; }
     .promo-tabs{ background:#fff; padding:14px; border-radius:12px; box-shadow:0 8px 20px rgba(17,17,17,0.04); }
     .promo-tabs .ui-tabs-nav{ margin-bottom:8px; }
     .promo-tabs .ui-tabs-panel{ padding:6px 2px; color:var(--muted); }
-
     .promo-booking, .promo-tabs, .promo-info { background: linear-gradient(180deg, rgba(255,255,255,0.9), #fff); border-radius:12px; padding:14px; }
-
     .accordion-compact .ui-accordion-header{ font-weight:700; background:transparent; border:1px solid rgba(168,122,85,0.06); padding:10px; border-radius:8px; margin-bottom:8px; font-family:inherit; font-size:15px; }
     .accordion-compact .ui-accordion-content{ padding:10px; margin-bottom:6px; background:#fff; border-radius:8px; box-shadow:0 6px 18px rgba(11,22,33,0.03); color:var(--muted); font-family:inherit; font-size:14px; }
-
     @media (max-width:480px){
       .booking-row { gap:8px; }
       .booking-input { min-width:unset; width:100%; }
       .booking-btn { width:100%; }
     }
-
-    /* зменшення висоти слайдів на мобільних (дубль із CSS для сумісності) */
-    @media (max-width:900px){
-      .slides{height:320px}
-    }
-    @media (max-width:520px){
-      .slides{height:220px}
-    }
-
-    /* тонке вирівнювання для svg-іконок соцмереж */
-    .social-icons svg { vertical-align:middle; }
   </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-row">
-      <div class="brand">
-        <img src="logo.png" alt="BlackBean logo" class="logo">
-        <div class="brand-text">
-          <div class="brand-title">BlackBean</div>
-        </div>
-      </div>
-      <nav class="main-nav" aria-label="Головна навігація">
-        <a href="#promo">Бронювання</a>
-        <a href="#menu">Меню</a>
-        <a href="#gallery">Галерея</a>
-        <a href="#contacts">Контакти</a>
-      </nav>
-    </div>
-  </header>
-
-  <section class="hero" id="top">
-    <div class="hero-overlay"></div>
-    <div class="container hero-inner">
-      <h1 class="hero-title">Кава. Атмосферність. Справжність.<br><br><span class="hero-sub">Твій куточок кави.</span></h1>
-      <div class="hero-actions"></div>
-    </div>
-  </section>
-
-  <section id="promo" class="section">
-    <div class="container promo-grid">
-      <div class="promo-booking">
-        <h3>Забронюйте столик</h3>
-        <p class="muted">Оберіть ім'я, час і дату - ми підготуємо для вас найкраще місце.</p>
-        <div class="booking-row">
-          <input id="book-name" class="booking-input" type="text" placeholder="Ім'я" aria-label="Ім'я">
-          <input id="time" class="booking-input" type="time" aria-label="Час бронювання" value="19:00">
-          <input id="date" class="booking-input" type="text" placeholder="Оберіть дату" aria-label="Дата бронювання">
-          <button id="book-btn" class="booking-btn" type="button">Забронювати</button>
-        </div>
-        <p id="booking-note" class="muted" style="margin-top:8px;font-size:14px">Після бронювання ви отримаєте підтвердження.</p>
-      </div>
-
-      <div class="promo-tabs">
-        <h3>Події та пропозиції</h3>
-        <div id="tabs">
-          <ul>
-            <li><a href="#tab-1">Події</a></li>
-            <li><a href="#tab-2">Пропозиції</a></li>
-          </ul>
-          <div id="tab-1"><p>Живі виступи щоп'ятниці, дегустації кави, тематичні вечори.</p></div>
-          <div id="tab-2"><p>Знижки на десерти кожного вівторка, сезонні меню.</p></div>
-        </div>
-      </div>
-
-      <aside class="promo-info">
-        <h3>Інформери</h3>
-        <div id="accordion-info" class="accordion-compact">
-          <h3>Погода</h3>
-          <div>
-            <div id="weather">Завантаження...</div>
-            <div id="weather-msg" style="margin-top:6px;color:var(--muted)"></div>
-          </div>
-          <h3>Курс валют</h3>
-          <div>
-            <div id="rates">Завантаження...</div>
-          </div>
-          <h3>Годинник</h3>
-          <div>
-            <div id="clock" style="font-weight:700;"></div>
-          </div>
-        </div>
-      </aside>
-    </div>
-  </section>
-
-  <main>
-    <section id="menu" class="section section-alt">
-      <div class="container split-row">
-        <div class="split-left">
-          <div class="slider" data-slider="food">
-            <div class="slides">
-              <img src="ben-kolde-FFqNATH27EM-unsplash.jpg" alt="Сніданок 1">
-              <img src="calum-lewis-2V0yqVNkVRM-unsplash.jpg" alt="Сніданок 2">
-              <img src="kavita-joshi-rai-lE5O9DktAQY-unsplash.jpg" alt="Сніданок 3">
-            </div>
-            <div class="dots"></div>
-          </div>
-        </div>
-        <div class="split-right">
-          <h2>Сніданки</h2>
-          <p class="muted">Приходьте на сніданки щодня з 8:30 до 16:00! Смакуйте смачні страви в комфортній обстановці. Ми чекаємо на вас!</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="drinks" class="section">
-      <div class="container split-row">
-        <div class="split-right">
-          <h2>Напої</h2>
-          <p class="muted">Свіжі кавові напої, ароматний чай, смачний какао та сезонні напої. Насолоджуйтеся кожним ковтком і відкрийте нові смаки разом з нами!</p>
-        </div>
-        <div class="split-left">
-          <div class="slider" data-slider="drinks">
-            <div class="slides">
-              <img src="syauqy-ayyash-8sYN4tHuzBg-unsplash.jpg" alt="Напій 1">
-              <img src="natanja-grun-X2s8GhnQmds-unsplash.jpg" alt="Напій 2">
-              <img src="jayden-sim-4m2kWe4tfMM-unsplash.jpg" alt="Напій 3">
-            </div>
-            <div class="dots"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="gallery" class="section section-alt">
-      <div class="container split-row reverse-on-mobile">
-        <div class="split-right">
-          <div class="slider" data-slider="atmosphere">
-            <div class="slides">
-              <img src="steffan-mitchell-gHrgeeCCkYA-unsplash.jpg" alt="Атмосфера 1">
-              <img src="rizky-subagja-1k7TnX5GAww-unsplash.jpg" alt="Атмосфера 2">
-            </div>
-            <div class="dots"></div>
-          </div>
-        </div>
-        <div class="split-right">
-          <h2>Атмосфера</h2>
-          <p class="muted">Ми створили простір, де аромат обсмажених зерен поєднується з атмосферою спокою. Тут можна попрацювати, зустріти друзів або просто насолодитися улюбленим напоєм.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="contacts" class="contacts section">
-      <div class="container">
-        <h3>Контакти</h3>
-        <div class="contact-grid">
-          <div>
-            <strong>Адреса</strong>
-            <p class="muted">вул. Кавова, 12, Місто</p>
-          </div>
-          <div>
-            <strong>Години роботи</strong>
-            <p class="muted">Пн–Пт: 08:30–20:00<br>Сб–Нд: 09:00–18:00</p>
-          </div>
-          <div>
-            <strong>Телефон</strong>
-            <p class="muted">+380 12 345 6789</p>
-          </div>
-          <div>
-            <strong>Соцмережі</strong>
-            <div class="social-icons">
-              <a class="share-facebook" href="#" target="_blank" aria-label="Facebook">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 12a10 10 0 10-11.5 9.9v-7H8.5v-3h2V9.1c0-2 1.2-3.1 3-3.1.9 0 1.8.1 1.8.1v2h-1c-1 0-1.3.6-1.3 1.2V12h2.2l-.4 3h-1.8v7A10 10 0 0022 12z"/></svg>
-              </a>
-              <a class="share-twitter" href="#" target="_blank" aria-label="Twitter">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 5.9c-.6.3-1.2.6-1.9.8.7-.4 1.2-1 1.4-1.7-.7.4-1.5.7-2.3.9A3.8 3.8 0 0016.2 5c-2 0-3.5 1.7-3 3.6-2.6-.1-4.8-1.4-6.3-3.3-.9 1.6-.4 3.6 1 4.6-.5 0-1-.2-1.4-.4v.1c0 1.6 1.1 3 2.6 3.3-.5.1-1 .1-1.6.1.4 1.3 1.7 2.3 3.2 2.3A7.6 7.6 0 012 19.5 10.8 10.8 0 008.4 21c6.1 0 9.4-5 9.4-9.4v-.4c.7-.6 1.3-1.3 1.8-2.1-.6.3-1.3.5-2 .6z"/></svg>
-              </a>
-              <a class="share-instagram" href="https://instagram.com/" target="_blank" aria-label="Instagram">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm8 3H9a1 1 0 000 2h6a1 1 0 000-2zM12 8.8A3.2 3.2 0 1015.2 12 3.2 3.2 0 0012 8.8zM12 14a2 2 0 112-2 2 2 0 01-2 2z"/></svg>
-              </a>
-              <a class="share-pinterest" href="#" target="_blank" aria-label="Pinterest">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2a10 10 0 00-3.3 19.4c-.1-1-.2-2.6 0-3.7.2-1 .8-6.5.8-6.5s-.3-.7-.3-1.8c0-1.7 1-3 2.2-3 1 0 1.4.8 1.4 1.7 0 1-.6 2.6-.9 4-.3 1.2.6 2.1 1.9 2.1 2.3 0 3.9-2.9 3.9-6.3 0-2.6-1.8-4.6-5-4.6-3.6 0-5.8 2.7-5.8 5.5 0 1 .4 2 1 2.6a.4.4 0 01.1.4c-.1.5-.3 1.6-.3 1.8 0 .2-.1.3-.3.2-1.2-.6-2-2.3-2-3.7 0-3.6 2.6-7 7.6-7 4 0 6.4 2.9 6.4 6.2 0 4-2.2 7.2-5.5 7.2-1.1 0-2.2-.6-2.6-1.3 0 0-.6 2.3-.7 2.8-.2.9-.6 1.8-.9 2.6A10 10 0 1012 2z"/></svg>
-              </a>
-            </div>
-          </div>
-        </div>
+<header class="site-header">
+  <div class="container header-row">
+    <div class="brand">
+      <img src="logo.png" alt="BlackBean logo" class="logo">
+      <div class="brand-text">
+        <div class="brand-title">BlackBean</div>
       </div>
     </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container">
-      <p>© <span id="year"></span> BlackBean</p>
-    </div>
-  </footer>
-
-  <div id="booking-dialog" title="Бронювання" style="display:none;">
-    <p id="booking-text"></p>
+    <nav class="main-nav" aria-label="Головна навігація">
+      <a href="#promo">Бронювання</a>
+      <a href="#menu">Меню</a>
+      <a href="#gallery">Галерея</a>
+      <a href="#contacts">Контакти</a>
+    </nav>
   </div>
+</header>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
-  <script>
-  document.getElementById('year').textContent = new Date().getFullYear();
+<section class="hero" id="top">
+  <div class="hero-overlay"></div>
+  <div class="container hero-inner">
+    <h1 class="hero-title">Кава. Атмосферність. Справжність.<br><br><span class="hero-sub">Твій куточок кави.</span></h1>
+  </div>
+</section>
 
-  $(function(){
-    $("#tabs").tabs();
-    $("#accordion-info").accordion({ heightStyle: "content", collapsible: true });
-    $("#date").datepicker({ dateFormat: "dd.mm.yy", minDate: 0 });
+<section id="promo" class="section">
+  <div class="container promo-grid">
+    <div class="promo-booking">
+      <h3>Забронюйте столик</h3>
+      <p class="muted">Оберіть ім'я, час і дату - ми підготуємо для вас найкраще місце.</p>
+      <div class="booking-row">
+        <input id="book-name" class="booking-input" type="text" placeholder="Ім'я" aria-label="Ім'я">
+        <input id="time" class="booking-input" type="time" aria-label="Час бронювання" value="19:00">
+        <input id="date" class="booking-input" type="text" placeholder="Оберіть дату" aria-label="Дата бронювання">
+        <button id="book-btn" class="booking-btn" type="button">Забронювати</button>
+      </div>
+      <p id="booking-note" class="muted" style="margin-top:8px;font-size:14px">Після бронювання ви отримаєте підтвердження.</p>
+    </div>
 
-    $("#booking-dialog").dialog({
-      autoOpen: false,
-      modal: true,
-      width: 380,
-      resizable: false,
-      buttons: { "Гаразд": function(){ $(this).dialog("close"); } }
-    });
+    <div class="promo-tabs">
+      <h3>Події та пропозиції</h3>
+      <div id="tabs">
+        <ul>
+          <li><a href="#tab-1">Події</a></li>
+          <li><a href="#tab-2">Пропозиції</a></li>
+        </ul>
+        <div id="tab-1"><p>Живі виступи щоп'ятниці, дегустації кави, тематичні вечори.</p></div>
+        <div id="tab-2"><p>Знижки на десерти кожного вівторка, сезонні меню.</p></div>
+      </div>
+    </div>
 
-    function openBookingDialog(name, time, date){
-      const nm = name ? name.trim() : "";
-      const tm = time ? time : "";
-      const dt = date ? date : "";
-      if(!nm){
-        $("#booking-text").text("Будь ласка, введіть ваше ім'я.");
-        $("#booking-dialog").dialog("open");
-        return;
-      }
-      if(!tm){
-        $("#booking-text").text("Будь ласка, вкажіть час бронювання.");
-        $("#booking-dialog").dialog("open");
-        return;
-      }
-      if(!dt){
-        $("#booking-text").text("Будь ласка, оберіть дату для бронювання.");
-        $("#booking-dialog").dialog("open");
-        return;
-      }
-      $("#booking-text").text(`Вітаємо, ${nm}! Столик заброньовано на ${dt} о ${tm}.`);
-      $("#booking-dialog").dialog("open");
-    }
+    <aside class="promo-info">
+      <h3>Інформери</h3>
+      <div id="accordion-info" class="accordion-compact">
+        <h3>Погода</h3>
+        <div>
+          <div id="weather">Завантаження...</div>
+          <div id="weather-msg" style="margin-top:6px;color:var(--muted)"></div>
+        </div>
+        <h3>Курс валют</h3>
+        <div>
+          <div id="rates">Завантаження...</div>
+        </div>
+        <h3>Годинник</h3>
+        <div>
+          <div id="clock" style="font-weight:700;"></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
 
-    $("#book-btn").on("click", function(){
-      const name = $("#book-name").val();
-      const time = $("#time").val();
-      const date = $("#date").val();
-      openBookingDialog(name, time, date);
-    });
+<main>
+  <section id="menu" class="section section-alt">
+    <div class="container split-row">
+      <div class="split-left">
+        <div id="gallery-food" class="ug-gallery">
+          <img alt="Сніданок 1" data-image="ben-kolde-FFqNATH27EM-unsplash.jpg" data-description="Сніданок 1" src="ben-kolde-FFqNATH27EM-unsplash.jpg">
+          <img alt="Сніданок 2" data-image="calum-lewis-2V0yqVNkVRM-unsplash.jpg" data-description="Сніданок 2" src="calum-lewis-2V0yqVNkVRM-unsplash.jpg">
+          <img alt="Сніданок 3" data-image="kavita-joshi-rai-lE5O9DktAQY-unsplash.jpg" data-description="Сніданок 3" src="kavita-joshi-rai-lE5O9DktAQY-unsplash.jpg">
+        </div>
+      </div>
+      <div class="split-right">
+        <h2>Сніданки</h2>
+        <p class="muted">Приходьте на сніданки щодня з 8:30 до 16:00! Смакуйте смачні страви в комфортній обстановці.</p>
+      </div>
+    </div>
+  </section>
 
-    function updateClock(){ const now = new Date(); $("#clock").text(now.toLocaleTimeString('uk-UA')); }
-    updateClock(); setInterval(updateClock, 1000);
+  <section id="drinks" class="section">
+    <div class="container split-row">
+      <div class="split-right">
+        <h2>Напої</h2>
+        <p class="muted">Свіжі кавові напої, ароматний чай, смачний какао та сезонні напої.</p>
+      </div>
+      <div class="split-left">
+        <div id="gallery-drinks" class="ug-gallery">
+          <img alt="Напій 1" data-image="syauqy-ayyash-8sYN4tHuzBg-unsplash.jpg" data-description="Напій 1" src="syauqy-ayyash-8sYN4tHuzBg-unsplash.jpg">
+          <img alt="Напій 2" data-image="natanja-grun-X2s8GhnQmds-unsplash.jpg" data-description="Напій 2" src="natanja-grun-X2s8GhnQmds-unsplash.jpg">
+          <img alt="Напій 3" data-image="jayden-sim-4m2kWe4tfMM-unsplash.jpg" data-description="Напій 3" src="jayden-sim-4m2kWe4tfMM-unsplash.jpg">
+        </div>
+      </div>
+    </div>
+  </section>
 
-    $.getJSON('https://api.exchangerate.host/latest?base=UAH&symbols=USD,EUR')
-      .done(function(data){
-        if(data && data.rates){
-          $("#rates").html(`<p>1 UAH = ${(data.rates.USD).toFixed(4)} USD</p><p>1 UAH = ${(data.rates.EUR).toFixed(4)} EUR</p>`);
-        } else {
-          $("#rates").text("Курси тимчасово недоступні");
-        }
-      }).fail(function(){ $("#rates").text("Помилка при отриманні курсів"); });
+  <section id="gallery" class="section section-alt">
+    <div class="container split-row reverse-on-mobile">
+      <div class="split-right">
+        <div id="gallery-atmosphere" class="ug-gallery">
+          <img alt="Атмосфера 1" data-image="steffan-mitchell-gHrgeeCCkYA-unsplash.jpg" data-description="Атмосфера 1" src="steffan-mitchell-gHrgeeCCkYA-unsplash.jpg">
+          <img alt="Атмосфера 2" data-image="rizky-subagja-1k7TnX5GAww-unsplash.jpg" data-description="Атмосфера 2" src="rizky-subagja-1k7TnX5GAww-unsplash.jpg">
+        </div>
+      </div>
+      <div class="split-right">
+        <h2>Атмосфера</h2>
+        <p class="muted">Ми створили простір, де аромат обсмажених зерен поєднується з атмосферою спокою. Тут можна попрацювати, зустріти друзів або просто насолодитися улюбленим напоєм.</p>
+      </div>
+    </div>
+  </section>
 
-    const lat = 48.62, lon = 22.29;
-    $.getJSON(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&timezone=Europe%2FKyiv`)
-      .done(function(data){
-        if(data && data.current_weather){
-          const t = data.current_weather.temperature;
-          $("#weather").html(`<strong>Ужгород:</strong> ${t.toFixed(1)} °C`);
-          if(t < 18){
-            $("#weather-msg").text("У нас можна зігрітися гарячим напоєм ☕");
-          } else {
-            $("#weather-msg").text("У нас є не тільки приміщення, а й чудова тераса 🌤️");
-          }
-        } else {
-          $("#weather").text("Погода недоступна");
-        }
-      }).fail(function(){ $("#weather").text("Помилка при отриманні погоди"); });
+  <section id="contacts" class="contacts section">
+    <div class="container">
+      <h3>Контакти</h3>
+      <div class="contact-grid">
+        <div>
+          <strong>Адреса</strong>
+          <p class="muted">вул. Кавова, 12, Ужгород</p>
+        </div>
+        <div>
+          <strong>Години роботи</strong>
+          <p class="muted">Пн–Пт: 08:30–20:00<br>Сб–Нд: 09:00–18:00</p>
+        </div>
+        <div>
+          <strong>Телефон</strong>
+          <p class="muted">+380 12 345 6789</p>
+        </div>
+        <div>
+          <strong>Соцмережі</strong>
+          <div class="social-icons">
+            <a class="share-facebook" href="#" target="_blank" aria-label="Facebook">
+              <svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 10-11.5 9.9v-7H8.5v-3h2V9.1c0-2 1.2-3.1 3-3.1.9 0 1.8.1 1.8.1v2h-1c-1 0-1.3.6-1.3 1.2V12h2.2l-.4 3h-1.8v7A10 10 0 0022 12z"/></svg>
+            </a>
+            <a class="share-twitter" href="#" target="_blank" aria-label="Twitter">
+              <svg viewBox="0 0 24 24"><path d="M22 5.9c-.6.3-1.2.6-1.9.8.7-.4 1.2-1 1.4-1.7-.7.4-1.5.7-2.3.9A3.8 3.8 0 0016.2 5c-2 0-3.5 1.7-3 3.6-2.6-.1-4.8-1.4-6.3-3.3-.9 1.6-.4 3.6 1 4.6-.5 0-1-.2-1.4-.4v.1c0 1.6 1.1 3 2.6 3.3-.5.1-1 .1-1.6.1.4 1.3 1.7 2.3 3.2 2.3A7.6 7.6 0 012 19.5 10.8 10.8 0 008.4 21c6.1 0 9.4-5 9.4-9.4v-.4c.7-.6 1.3-1.3 1.8-2.1-.6.3-1.3.5-2 .6z"/></svg>
+            </a>
+            <a class="share-instagram" href="https://instagram.com/" target="_blank" aria-label="Instagram">
+              <svg viewBox="0 0 24 24"><path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm8 3H9a1 1 0 000 2h6a1 1 0 000-2zM12 8.8A3.2 3.2 0 1015.2 12 3.2 3.2 0 0012 8.8zM12 14a2 2 0 112-2 2 2 0 01-2 2z"/></svg>
+            </a>
+            <a class="share-pinterest" href="#" target="_blank" aria-label="Pinterest">
+              <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 00-3.3 19.4c-.1-1-.2-2.6 0-3.7.2-1 .8-6.5.8-6.5s-.3-.7-.3-1.8c0-1.7 1-3 2.2-3 1 0 1.4.8 1.4 1.7 0 1-.6 2.6-.9 4-.3 1.2.6 2.1 1.9 2.1 2.3 0 3.9-2.9 3.9-6.3 0-2.6-1.8-4.6-5-4.6-3.6 0-5.8 2.7-5.8 5.5 0 1 .4 2 1 2.6a.4.4 0 01.1.4c-.1.5-.3 1.6-.3 1.8 0 .2-.1.3-.3.2-1.2-.6-2-2.3-2-3.7 0-3.6 2.6-7 7.6-7 4 0 6.4 2.9 6.4 6.2 0 4-2.2 7.2-5.5 7.2-1.1 0-2.2-.6-2.6-1.3 0 0-.6 2.3-.7 2.8-.2.9-.6 1.8-.9 2.6A10 10 0 1012 2z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
 
-    const pageUrl = encodeURIComponent(window.location.href);
-    const pageTitle = encodeURIComponent(document.title);
-    $(".share-facebook").attr("href", `https://www.facebook.com/sharer.php?u=${pageUrl}`);
-    $(".share-twitter").attr("href", `https://twitter.com/intent/tweet?text=${pageTitle}&url=${pageUrl}`);
-    $(".share-pinterest").attr("href", `https://pinterest.com/pin/create/button/?url=${pageUrl}`);
+<footer class="site-footer">
+  <div class="container">
+    <p>© <span id="year"></span> BlackBean</p>
+  </div>
+</footer>
+
+<div id="booking-dialog" title="Бронювання" style="display:none;">
+  <p id="booking-text"></p>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<!-- UniteGallery JS -->
+<script src="https://cdn.jsdelivr.net/npm/unitegallery/dist/js/unitegallery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/unitegallery/dist/themes/tiles/ug-theme-tiles.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/unitegallery/dist/themes/slider/ug-theme-slider.js"></script>
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+$(function(){
+  $("#tabs").tabs();
+  $("#accordion-info").accordion({ heightStyle: "content", collapsible: true });
+  $("#date").datepicker({ dateFormat: "dd.mm.yy", minDate: 0 });
+
+  $("#booking-dialog").dialog({
+    autoOpen: false,
+    modal: true,
+    width: 380,
+    resizable: false,
+    buttons: { "Гаразд": function(){ $(this).dialog("close"); } }
   });
 
-  (function(){
-    const sliders = document.querySelectorAll('.slider');
-    sliders.forEach(slider => {
-      const slidesWrap = slider.querySelector('.slides');
-      const slides = Array.from(slidesWrap.querySelectorAll('img'));
-      const dotsWrap = slider.querySelector('.dots');
-      let current = 0;
-      const total = slides.length;
+  function openBookingDialog(name, time, date){
+    const nm = name ? name.trim() : "";
+    const tm = time ? time : "";
+    const dt = date ? date : "";
+    if(!nm){ $("#booking-text").text("Будь ласка, введіть ваше ім'я."); $("#booking-dialog").dialog("open"); return; }
+    if(!tm){ $("#booking-text").text("Будь ласка, вкажіть час бронювання."); $("#booking-dialog").dialog("open"); return; }
+    if(!dt){ $("#booking-text").text("Будь ласка, оберіть дату для бронювання."); $("#booking-dialog").dialog("open"); return; }
+    $("#booking-text").text(`Вітаємо, ${nm}! Столик заброньовано на ${dt} о ${tm}.`);
+    $("#booking-dialog").dialog("open");
+  }
 
-      slides.forEach((_, i) => {
-        const btn = document.createElement('button');
-        btn.className = 'dot';
-        if(i === 0) btn.classList.add('active');
-        btn.addEventListener('click', () => { goTo(i); resetTimer(); });
-        dotsWrap.appendChild(btn);
-      });
+  $("#book-btn").on("click", function(){
+    openBookingDialog($("#book-name").val(), $("#time").val(), $("#date").val());
+  });
 
-      function show(index){
-        slides.forEach((img, i) => { img.style.opacity = i===index?'1':'0'; img.style.pointerEvents = i===index?'auto':'none'; });
-        const dots = dotsWrap.querySelectorAll('.dot');
-        dots.forEach((d,i)=> d.classList.toggle('active', i===index));
-      }
+  function updateClock(){ const now = new Date(); $("#clock").text(now.toLocaleTimeString('uk-UA')); }
+  updateClock(); setInterval(updateClock, 1000);
 
-      function goTo(i){ current=i; show(current); }
+  $.getJSON('https://api.exchangerate.host/latest?base=UAH&symbols=USD,EUR')
+    .done(function(data){
+      if(data && data.rates){
+        $("#rates").html(`<p>1 UAH = ${(data.rates.USD).toFixed(4)} USD</p><p>1 UAH = ${(data.rates.EUR).toFixed(4)} EUR</p>`);
+      } else { $("#rates").text("Курси тимчасово недоступні"); }
+    }).fail(function(){ $("#rates").text("Помилка при отриманні курсів"); });
 
-      let timer = setInterval(()=>{ current=(current+1)%total; show(current); }, 3500);
+  const lat = 48.62, lon = 22.29;
+  $.getJSON(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&timezone=Europe%2FKyiv`)
+    .done(function(data){
+      if(data && data.current_weather){
+        const t = data.current_weather.temperature;
+        $("#weather").html(`<strong>Ужгород:</strong> ${t.toFixed(1)} °C`);
+        $("#weather-msg").text(t < 18 ? "У нас можна зігрітися гарячим напоєм ☕" : "У нас є не тільки приміщення, а й чудова тераса 🌤️");
+      } else { $("#weather").text("Погода недоступна"); }
+    }).fail(function(){ $("#weather").text("Помилка при отриманні погоди"); });
 
-      function resetTimer(){ clearInterval(timer); timer=setInterval(()=>{ current=(current+1)%total; show(current); },3500); }
+  const pageUrl = encodeURIComponent(window.location.href);
+  const pageTitle = encodeURIComponent(document.title);
+  $(".share-facebook").attr("href", `https://www.facebook.com/sharer.php?u=${pageUrl}`);
+  $(".share-twitter").attr("href", `https://twitter.com/intent/tweet?text=${pageTitle}&url=${pageUrl}`);
+  $(".share-pinterest").attr("href", `https://pinterest.com/pin/create/button/?url=${pageUrl}`);
+});
 
-      show(0);
-    });
-  })();
-  </script>
+// UniteGallery
+$(window).on('load', function(){
+  jQuery("#gallery-food").unitegallery({
+    gallery_theme:"slider",
+    slider_enable_text_panel:true,
+    slider_textpanel_position:"bottom",
+    gallery_width:"100%",
+    gallery_height:400
+  });
+
+  jQuery("#gallery-drinks").unitegallery({
+    gallery_theme:"slider",
+    slider_enable_text_panel:true,
+    slider_textpanel_position:"bottom",
+    gallery_width:"100%",
+    gallery_height:400
+  });
+
+  jQuery("#gallery-atmosphere").unitegallery({
+    gallery_theme:"tiles",
+    tile_enable_text:true,
+    gallery_width:"100%",
+    gallery_height:400
+  });
+});
+</script>
 </body>
 </html>
