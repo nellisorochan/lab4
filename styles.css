@@ -1,0 +1,243 @@
+:root{
+  --pistachio: #CFEBD0;
+  --brown: #A87A55;
+  --beige: #F4EBDD;
+  --text: #111111;
+  --muted: #6b5a4a;
+  --container-max: 1100px;
+  --gap: 28px;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Reset упорядкування */
+*{box-sizing:border-box}
+body{margin:0;color:var(--text);background:#fff;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+
+/* Container */
+.container{
+  width:calc(100% - 48px);
+  max-width:var(--container-max);
+  margin:0 auto;
+  padding:24px;
+}
+
+/* HEADER */
+.site-header{
+  background:var(--beige);
+  border-bottom:1px solid rgba(168,122,85,0.07);
+  position:sticky; top:0; z-index:30;
+}
+.header-row{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{height:56px;width:auto;border-radius:8px}
+.brand-title{font-weight:700;font-size:18px;color:var(--text)}
+.brand-sub{font-size:12px;color:var(--muted)}
+.main-nav a{margin-left:18px;text-decoration:none;color:var(--muted);font-weight:600}
+.main-nav a:hover{color:var(--brown)}
+
+/* HERO */
+.hero{
+  position:relative;
+  background: url("images/320C2388-AB51-4123-8553-E7E047F6EE54_1_201_a.jpeg") center/cover no-repeat;
+  padding:100px 0;
+  color:#fff;
+}
+.hero-overlay{
+  position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,0.42), rgba(0,0,0,0.24));
+  z-index:1;backdrop-filter: blur(1px);
+}
+.hero-inner{position:relative;z-index:2;max-width:760px;margin-left:6%}
+.hero-title{font-size:44px;line-height:1.05;margin:0 0 12px;font-weight:700}
+.hero-sub{font-weight:500;color:rgba(255,255,255,0.95)}
+.hero-lead{margin:0 0 18px;color:rgba(255,255,255,0.92);font-size:17px}
+.hero-actions{display:flex;gap:12px;align-items:center}
+
+/* кнопки hero */
+.hero-btn{
+  background:var(--pistachio);
+  color:var(--text);
+  padding:12px 22px;border-radius:28px;text-decoration:none;font-weight:700;
+  box-shadow:0 6px 18px rgba(17,17,17,0.07);
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+.hero-btn:hover{transform:translateY(-3px);box-shadow:0 10px 26px rgba(17,17,17,0.12)}
+.ghost-btn{background:transparent;border:1px solid rgba(255,255,255,0.18);padding:10px 18px;border-radius:28px;color:rgba(255,255,255,0.95);text-decoration:none}
+
+/* SECTIONS */
+.section{padding:56px 0}
+.section-alt{background:linear-gradient(180deg, rgba(207,235,208,0.04), #fff)}
+
+/* Split layout (slider + text) */
+.split-row{display:flex;gap:var(--gap);align-items:center;justify-content:space-between}
+.split-left, .split-right{flex:1;min-width:0}
+.split-left{display:flex;align-items:center;justify-content:center}
+.split-right{padding:8px}
+
+/* Titles and muted text */
+h2{font-size:26px;color:var(--brown);margin:0 0 12px}
+.muted{color:var(--muted);line-height:1.6}
+
+/* SLIDER */
+.slider{width:100%;border-radius:12px;overflow:hidden;position:relative;background:#fff;box-shadow:0 10px 30px rgba(17,17,17,0.06)}
+.slides{position:relative;height:520px}
+.slides img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;border-radius:0;transition:opacity .6s ease;opacity:0;pointer-events:none}
+.slides img:first-child{opacity:1;pointer-events:auto}
+
+/* dots */
+.dots{display:flex;gap:10px;justify-content:center;padding:12px;background:transparent}
+.dot{width:12px;height:12px;border-radius:50%;border:0;background:rgba(0,0,0,0.16);cursor:pointer}
+.dot.active{background:var(--brown)}
+
+/* CONTACTS */
+.contacts h3{font-size:22px;color:var(--brown);margin:0 0 12px}
+.contact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.link{text-decoration:none;color:var(--muted)}
+.link:hover{color:var(--brown)}
+
+/* FOOTER */
+.site-footer{padding:18px 0;text-align:center;color:var(--muted);font-size:14px;border-top:1px solid rgba(0,0,0,0.04)}
+
+/* REVERSE layout on mobile for nice flow */
+.reverse-on-mobile{display:flex;align-items:center}
+@media (max-width:900px){
+  .split-row{flex-direction:column-reverse}
+  .reverse-on-mobile{flex-direction:column}
+  .hero-inner{margin-left:4%;padding:0 8px}
+  .slides{height:320px}
+}
+@media (max-width:520px){
+  .slides{height:220px}
+  .hero-title{font-size:30px}
+  .brand-title{font-size:16px}
+  .logo{height:48px}
+  .header-row{flex-direction:row;align-items:center}
+  .main-nav a{margin-left:12px;font-size:14px}
+  .contact-grid{grid-template-columns:1fr}
+}
+
+/* ====== Збіг шрифтів та дрібні поліпшення для jQuery UI і нових елементів ====== */
+
+/* нехай jQuery UI успадковує основний шрифт сайту */
+.ui-widget, .ui-widget * { font-family: inherit; font-size: 15px; color: inherit; }
+
+/* тонке вирівнювання заголовків віджетів під загальний стиль */
+.promo-booking h3, .promo-tabs h3, .promo-info h3 { font-family: inherit; font-weight:700; }
+
+/* стиль інпутів бронювання - відповідний до основного UI */
+.booking-input {
+  padding:10px 12px;
+  border-radius:10px;
+  border:1px solid rgba(0,0,0,0.06);
+  background:#fff;
+  font-family:inherit;
+  font-size:15px;
+  color:var(--text);
+  box-shadow: 0 2px 6px rgba(11,22,33,0.03);
+}
+
+/* кнопку трохи візуально підняти */
+.booking-btn{
+  background:var(--pistachio);
+  color:var(--text);
+  padding:10px 16px;
+  border-radius:28px;
+  border:0;
+  font-weight:700;
+  cursor:pointer;
+  font-family:inherit;
+  box-shadow:0 8px 22px rgba(17,17,17,0.08);
+}
+
+
+/* ====== PROMO GRID: Бронювання / Tabs / Інформери ====== */
+.promo-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr 320px;
+  gap:22px;
+  align-items:start;
+  padding:34px 0;
+}
+
+/* мобайл — стік */
+@media (max-width:980px){
+  .promo-grid{ grid-template-columns: 1fr; gap:18px; }
+}
+
+/* Booking */
+.promo-booking h3, .promo-tabs h3, .promo-info h3 { margin:0 0 8px; color:var(--brown); font-size:20px; }
+.booking-row{ display:flex; gap:10px; align-items:center; margin-top:10px; flex-wrap:wrap; }
+.booking-input{ padding:10px 12px; border-radius:10px; border:1px solid #e6e6e6; background:#fff; min-width:140px; }
+.booking-btn{ background:var(--pistachio); color:var(--text); padding:10px 14px; border-radius:28px; border:0; font-weight:700; cursor:pointer; box-shadow:0 6px 18px rgba(17,17,17,0.06); }
+.booking-btn:hover{ transform:translateY(-2px); }
+
+/* Tabs box */
+.promo-tabs{ background:#fff; padding:14px; border-radius:12px; box-shadow:0 8px 20px rgba(17,17,17,0.04); }
+.promo-tabs .ui-tabs-nav{ margin-bottom:8px; }
+.promo-tabs .ui-tabs-panel{ padding:6px 2px; color:var(--muted); }
+
+/* Info (accordion compact) */
+.promo-info{ }
+.accordion-compact .ui-accordion-header{ font-weight:700; background:transparent; border:1px solid rgba(168,122,85,0.06); padding:10px; border-radius:8px; margin-bottom:8px; }
+.accordion-compact .ui-accordion-content{ padding:10px; margin-bottom:6px; background:#fff; border-radius:8px; box-shadow:0 6px 18px rgba(11,22,33,0.03); color:var(--muted); }
+
+/* Сумісність з загальною палітрою */
+.promo-booking, .promo-tabs, .promo-info { background: linear-gradient(180deg, rgba(255,255,255,0.9), #fff); border-radius:12px; padding:14px; }
+.promo-booking .muted { color:var(--muted); }
+
+/* Малі екрани — компактні елементи */
+@media (max-width:520px){
+  .booking-row input[type="time"]{ min-width:120px; }
+  .promo-booking h3, .promo-tabs h3, .promo-info h3 { font-size:18px; }
+}
+
+
+/* нехай jQuery UI успадковує основний шрифт сайту */
+.ui-widget, .ui-widget * { font-family: inherit; font-size: 15px; color: inherit; }
+
+/* тонке вирівнювання заголовків віджетів під загальний стиль */
+.promo-booking h3, .promo-tabs h3, .promo-info h3 { font-family: inherit; font-weight:700; }
+
+/* стиль інпутів бронювання - відповідний до основного UI */
+.booking-input {
+  padding:10px 12px;
+  border-radius:10px;
+  border:1px solid rgba(0,0,0,0.06);
+  background:#fff;
+  font-family:inherit;
+  font-size:15px;
+  color:var(--text);
+  box-shadow: 0 2px 6px rgba(11,22,33,0.03);
+}
+
+/* кнопку трохи візуально підняти */
+.booking-btn{
+  background:var(--pistachio);
+  color:var(--text);
+  padding:10px 16px;
+  border-radius:28px;
+  border:0;
+  font-weight:700;
+  cursor:pointer;
+  font-family:inherit;
+  box-shadow:0 8px 22px rgba(17,17,17,0.08);
+}
+
+/* робимо tabs і accordion більш «вбудованими» */
+.promo-tabs .ui-tabs-nav li a { font-weight:600; color:var(--muted); }
+.promo-tabs .ui-tabs-nav .ui-state-active a { color:var(--brown); }
+.accordion-compact .ui-accordion-header { font-family:inherit; font-size:15px; }
+
+/* інформаційні картки (погода/курс/годинник) */
+.accordion-compact .ui-accordion-content { font-family:inherit; font-size:14px; }
+
+/* зменшити відстані на мобайлі */
+@media (max-width:480px){
+  .booking-row { gap:8px; }
+  .booking-input { min-width:unset; width:100%; }
+  .booking-btn { width:100%; }
+}
+
+/* невелике візуальне вирівнювання для svg-іконок соцмереж */
+.social-icons svg { vertical-align:middle; }
+
